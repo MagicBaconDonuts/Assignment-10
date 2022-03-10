@@ -19,15 +19,16 @@ public class RestController {
 	public ResponseEntity<WeekResponse> getWeekMeals(@RequestParam(required = false) String targetCalories,
 			@RequestParam Optional<String> diet, @RequestParam Optional<String> exclude){
 		SpoonacularAPI spoonacularApi = new SpoonacularAPI();
-		ResponseEntity<WeekResponse> test = spoonacularApi.callSpoonApiWeek(targetCalories, diet, exclude);
-		return test;
+		ResponseEntity<WeekResponse> week = spoonacularApi.callSpoonApiWeek(targetCalories, diet, exclude);
+		return week;
 	}
 
 	@GetMapping("mealplanner/day")
 	public ResponseEntity<DayResponse> getDayMeals(@RequestParam(required = false) String targetCalories,
-			@RequestParam(required = false) String diet, @RequestParam(required = false) String exclude){
+			@RequestParam(required = false) Optional<String> diet, @RequestParam(required = false) Optional<String> exclude){
 		SpoonacularAPI spoonacularApi = new SpoonacularAPI();
-		return spoonacularApi.callSpoonApiDays();
+		ResponseEntity<DayResponse> day = spoonacularApi.callSpoonApiDays(targetCalories, diet, exclude);
+		return day;
 	}
 	
 }

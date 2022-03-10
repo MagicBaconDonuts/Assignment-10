@@ -29,14 +29,14 @@ public class SpoonacularAPI {
 		return response;
 	}
 	
-	public ResponseEntity<DayResponse> callSpoonApiDays() {
+	public ResponseEntity<DayResponse> callSpoonApiDays(String targetCalories, Optional<String> diet, Optional<String> exclude) {
 		RestTemplate rt = new RestTemplate();
 		URI uri = UriComponentsBuilder.fromHttpUrl("https://api.spoonacular.com/mealplanner/generate")
 													   .queryParam("apiKey", "7de9ce2742e34d61819396562f39b159")
 													   .queryParam("timeFrame", "day")
-													   .queryParam("targetCalories", "2000")
-													   .queryParam("diet", "vegetarian")
-													   .queryParam("exclude", "shellfish, olives")
+													   .queryParam("targetCalories", targetCalories != null ? Integer.parseInt(targetCalories):2000)
+													   .queryParam("diet", diet)
+													   .queryParam("exclude", exclude)
 													   .build()
 													   .toUri();
 		ResponseEntity<DayResponse> response = rt.getForEntity(uri, DayResponse.class);
